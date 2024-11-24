@@ -1,7 +1,7 @@
 import axios from "axios";
 import "dotenv/config";
 
-export class ApiClient {
+export default class ApiClient {
   private apiUri: string;
 
   constructor(apiUri: string) {
@@ -16,11 +16,11 @@ export class ApiClient {
     return this.apiUri;
   }
 
-  async getFromAPI(moeda_origem: string, moeda_destino: string, quantia: number): Promise<[number, number]> {
+  getFromAPI = async (moeda_origem: string, moeda_destino: string, quantia: number): Promise<[number, number]> => {
     try {
-      const response = await axios.get(`${this.getApiURI}/pair/${moeda_origem}/${moeda_destino}`);
-      const conversionRate = response.conversion_rate;
-      const valorConvertido = quantia*conversionRate;
+      const response = await axios.get(`${this.getApiURI()}/pair/${moeda_origem}/${moeda_destino}`);
+      const conversionRate: number = response.data.conversion_rate;
+      const valorConvertido: number = quantia*conversionRate;
       return [valorConvertido, conversionRate];
     } catch (err) {
       throw new Error(err); 

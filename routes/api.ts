@@ -1,6 +1,13 @@
 import express from "express";
-import { convertCurrency } from "../controllers/currencyController";
+import CurrencyController from "../controllers/currencyController";
+import CurrencyService from "../services/currencyService";
+import ApiClient from "../utils/apiClient";
+import { initApplication } from "../setup/init";
 
-const router = express.Router();
+const currencyController = initApplication();
 
-router.post("/currency/:moeda_origem/:moeda_destino/:valor", convertCurrency);
+const apiRouter = express.Router();
+
+apiRouter.get("/currency/:moeda_origem/:moeda_destino/:valor", currencyController.convertCurrency);
+
+module.exports = apiRouter;

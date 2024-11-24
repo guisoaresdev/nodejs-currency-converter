@@ -2,20 +2,24 @@ import { Request, Response } from "express";
 import CurrencyService from "../services/currencyService";
 import { ResponseFormat } from "../interfaces/responseFormat";
 
-export class CurrencyController {
+export default class CurrencyController {
   private currencyService: CurrencyService;
 
-  constructor() {
-    this.currencyService = new CurrencyService();
+  constructor(currencyService: CurrencyService) {
+    this.currencyService = currencyService;
   }
 
-  async function convertCurrency(req: Request, res: Response): Promise<void> {
+  convertCurrency = async (req: Request, res: Response): Promise<void> => {
     try {
-      const [valor, taxa] = await this.currencyService.convert(req.params.moeda_origem, req.params.moeda_destino, parseFloat(req.params.valor));
-      let response: ResponseFormat = { value: valor, rate: taxa};
+      const moeda_origem = req.params.moeda_origem;
+      const moeda_destino = req.params.moeda_destino;
+      const valor_origem = parseFloat(req.params.valor);
+      const [valor_resultante, taxa_conversao] = await this.currencyService.convert(moeda_origem, moeda_destino, valor_origem);
+      const response: ResponseFormat = { value: valor_resultante, rate: taxa_conversao };
       res.json(response);
     } catch (err) {
-      res.status(500).send("Sigla da moeda não foi encontrada");
+      res.status(500).send(err);
+      throw new Error(err);
     }
   }
 }

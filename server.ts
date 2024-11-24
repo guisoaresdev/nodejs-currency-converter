@@ -1,6 +1,12 @@
 import express from "express";
 import cors from "cors";
-import routerApi from "./routes/api";
+import apiRouter from "./routes/api";
+import { initView } from "./setup/init";
+import "dotenv/config";
+
+/* 
+*  TODO: Separar instancia do Servidor e front no console.
+*/
 
 const app = express();
 
@@ -13,9 +19,8 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.use("/", apiRouter);
+app.use("/api", apiRouter);
 
-app.listen(8000, () => {
-  console.log("Server running at 8000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server running at ${process.env.PORT}`);
 });
-
