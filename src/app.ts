@@ -8,10 +8,12 @@ import Application from "./setup/application.js";
  *
  */
 
-function main() {
+async function main() {
   const app = new Application();
   const view = app.getCurrencyView();
-  view.menu();
+  await view.converterMoedaView();
 }
 
-main();
+main().catch((error) => {
+  console.error("Erro durante a execução da aplicação:", error);
+});

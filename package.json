@@ -1,8 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "tsc && tsc-alias",
-    "start": "node dist/app.js"
+    "start": "tsc && tsc-alias && node dist/app.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",
