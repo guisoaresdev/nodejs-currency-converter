@@ -37,7 +37,7 @@ export default class CurrencyView {
           valor_origem,
         );
         console.log(`Taxa de conversão: ${rate} `);
-        console.log(`Valor: ${value}`);
+        console.log(`Valor: ${value} ${moeda_destino}`);
       } catch (err) {
         if (err instanceof Error) {
           throw new Error(err.message);
